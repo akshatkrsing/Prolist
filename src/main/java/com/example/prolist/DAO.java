@@ -2,10 +2,9 @@ package com.example.prolist;
 
 public interface DAO {
     public static final String DB_URL =
-            "jdbc:mysql://localhost:3306/"+
-                    "addressbook?zeroDateTimeBehavior=convertToNull";
+            "jdbc:mysql://localhost:3306/ourDrive";
     public static final String DRIVER =
-            "com.mysql.jdbc.Driver";
+            "com.mysql.cj.jdbc.Driver";
     public static final String USER = "root";
-    public static final String PASS = "secret";
+    public static final String PASS = "XZMeE2M3v-Jno9P";
 }
