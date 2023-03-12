@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="532.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prolist.SignUp">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="set_username" layoutX="163.0" layoutY="105.0" prefHeight="21.0" prefWidth="205.0" promptText="Set Username" />
+            <PasswordField fx:id="set_password" layoutX="163.0" layoutY="139.0" prefHeight="23.0" prefWidth="205.0" promptText="Set Password" />
+            <PasswordField fx:id="confirm_password" layoutX="163.0" layoutY="173.0" prefHeight="23.0" prefWidth="205.0" promptText="Confirm Password" />
+            <Label alignment="CENTER" layoutX="105.0" layoutY="35.0" prefHeight="44.0" prefWidth="321.0" text="Sign Up To Enter" textAlignment="CENTER" textFill="#ff00a6">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Button fx:id="enter" layoutX="211.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#register" prefHeight="25.0" prefWidth="109.0" text="Enter" />
+            <Label fx:id="mismatch" alignment="CENTER" layoutX="143.0" layoutY="208.0" prefHeight="17.0" prefWidth="245.0" textAlignment="CENTER" textFill="#ff2929" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
