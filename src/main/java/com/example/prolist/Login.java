@@ -46,8 +46,7 @@ public class Login extends Application implements DAO{
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
                 if(rs.next()){
-
-
+                    enter_dashboard();
 
                 }
                 else{
@@ -57,6 +56,8 @@ public class Login extends Application implements DAO{
                 }
 
             } catch (SQLException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 

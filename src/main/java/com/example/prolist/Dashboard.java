@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Dashboard implements DAO {
+    private String DB;
     public Dashboard(Stage stage,String database) throws IOException {
+        DB =DB_URL+ database+";";
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1018, 467);
         stage.setScene(scene);
@@ -67,7 +69,7 @@ public class Dashboard implements DAO {
         String sql="CREATE TABLE "+table+"(id INT UNSIGNED NOT NULL AUTO_INCREMENT, PRIMARY KEY (id));";
         try {
             Class.forName(DRIVER);
-            Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
+            Connection con = DriverManager.getConnection(DB, USER, PASS);
 
             Statement stmt = con.createStatement();
             stmt.executeUpdate(sql);
@@ -99,7 +101,7 @@ public class Dashboard implements DAO {
         ResultSet rs;
         try {
             Class.forName(DRIVER);
-            Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
+            Connection con = DriverManager.getConnection(DB, USER, PASS);
 
             Statement stmt = con.createStatement();
             rs =stmt.executeQuery(sql);
