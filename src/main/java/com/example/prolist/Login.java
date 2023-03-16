@@ -4,10 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 
@@ -26,26 +23,29 @@ public class Login extends Application implements DAO{
     @FXML
     PasswordField password = new PasswordField();
     private Scene scene;
-    private String user;
+    protected static String user;
     private String pass;
+    protected static String database;
+    protected static ListView<String> user_list = new ListView<>();
 
     @FXML
     public void authenticate(){
-        user = username.getText();
-        pass = password.getText();
+        user = username.getText().trim();
+        pass = password.getText().trim();
 
-        if(user==null || pass==null){
+
+        if(user.isEmpty()|| pass.isEmpty()){
             prompt.setText("Incomplete Credentials !");
         }
         else{
-            String sql ="SELECT * FROM logged WHERE username ="+user+" AND password ="+pass+";";
+            String sql ="SELECT * FROM logged WHERE username =\""+user+"\" AND password =\""+pass+"\";";
 
             try{Class.forName(DRIVER);
                 Connection con = DriverManager.getConnection(DB_LOGIN_URL, USER, PASS);
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
-                if(rs.next()){
+                if(rs.isBeforeFirst()){
                     enter_dashboard();
 
                 }
@@ -72,13 +72,15 @@ public class Login extends Application implements DAO{
         scene = new Scene(fxmlLoader.load(), 532, 304);
         Stage stage = (Stage)sign_up.getScene().getWindow();
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
-
 
     }
     public void enter_dashboard() throws IOException, SQLException {
         Stage stage = (Stage)reenter.getScene().getWindow();
-        String sql ="SELECT * FROM logged WHERE username ="+user+" AND password ="+pass+";";
+        String sql ="SELECT * FROM logged WHERE username =\""+user+"\" AND password =\""+pass+"\";";
+        String load_list ="SELECT * FROM "+user+";";
+
         ResultSet rs;
         try{Class.forName(DRIVER);
             Connection con = DriverManager.getConnection(DB_LOGIN_URL, USER, PASS);
@@ -89,8 +91,26 @@ public class Login extends Application implements DAO{
             }catch(SQLException | ClassNotFoundException e){
             throw new RuntimeException(e);
             }
-        String database = rs.getString("db");
-        Dashboard dash = new Dashboard(stage,database);
+        rs.next();
+        database = rs.getString("db");
+
+        try{Class.forName(DRIVER);
+            Connection con2 = DriverManager.getConnection(DB_LIST, USER, PASS);
+
+            Statement stmt = con2.createStatement();
+            rs = stmt.executeQuery(load_list);
+            while(rs.next()){
+                user_list.getItems().addAll(rs.getString("topic"));
+            }
+        }catch(SQLException | ClassNotFoundException e){
+            throw new RuntimeException(e);
+        }
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+        scene = new Scene(fxmlLoader.load(), 1018, 467);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
 
     }
 
@@ -100,6 +120,7 @@ public class Login extends Application implements DAO{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
         scene = new Scene(fxmlLoader.load(), 527, 302);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
 
     }
